@@ -9,6 +9,5 @@ router = APIRouter(prefix='/users', tags=['Users - V1'])
 def get_users(filters_query: FiltersSchema = Query(),
               service:UserService = Depends(get_user_service)
               ):
-    print("caiu aqui")
     users = service.get_users(filters_query.limit, filters_query.page)
     return users
