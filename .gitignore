@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes Virtuais (Essencial)
+.venv/
+venv/
+ENV/
+env/
+
+# Configurações e Segredos
+.env
+.flaskenv
+
+# Distribuição / Pacotes
+dist/
+build/
+*.egg-info/
+
+# Testes e Cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+
+# Editores de Código
+.vscode/
+.idea/
+*.swp
+.DS_Store
