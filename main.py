@@ -11,6 +11,7 @@ init_db()
 def status() -> dict[str, str]:
     return {"status": "Olha, funciono"}
 
+
 """
 A api precisa gerir transacoes:
 Adicionar saldo;
