@@ -1,10 +1,14 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pathlib import Path
+
+BASE_PROJECT_PATH = Path(__file__).resolve().parent.parent.parent.parent
 
 
 class Settings(BaseSettings):
-    DB_URL: str = "mysql+mysqlconnector://root:1234@localhost:3306/sergiobot"
+    DB_URL: str
+    model_config = SettingsConfigDict(
+        env_file=BASE_PROJECT_PATH / ".env", env_file_encoding="utf-8"
+    )
 
-    model_config = SettingsConfigDict(env_file=".env")
 
-
-settings = Settings()
+settings = Settings()  # ty:ignore[missing-argument]

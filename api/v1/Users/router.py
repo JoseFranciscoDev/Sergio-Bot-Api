@@ -1,15 +1,29 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, status, HTTPException
 from api.v1.Users.services import UserService
 from api.v1.Users.services import get_user_service
-from api.v1.Users.schemas import FiltersSchema
+from api.v1.Users.schemas import FiltersSchema, CreateUserSchema
 
 router = APIRouter(prefix="/users", tags=["Users - V1"])
 
 
 @router.get("/")
 def get_users(
-    filters_query: FiltersSchema = Query(),
-    service: UserService = Depends(get_user_service),
+    filters_query: FiltersSchema = Query(), service: UserService = Depends(get_user_service)
 ):
-    users = service.get_users(filters_query.limit, filters_query.page)
+
+    users = service.get_users(
+        filters_query.limit,
+        filters_query.page,
+    )
     return users
+
+
+@router.post("/", status_code=status.HTTP_201_CREATED)
+def post_users(new_user: CreateUserSchema, service: UserService = Depends(get_user_service)):
+    try:
+        return service.create_user(new_user)
+    except Exception:
+        HTTPException(
+            status_code=400,
+            detail="Error at create user",
+        )

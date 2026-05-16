@@ -15,6 +15,16 @@ class UserRepository:
         users: Sequence[User] = self.session.execute(query).scalars().all()
         return users
 
+    def create_user(self, new_user: User) -> User | Exception:
+        try:
+            self.session.add(new_user)
+            self.session.commit()
+            self.session.refresh(new_user)
+            return new_user
+        except Exception as error:
+            self.session.rollback()
+            return error
+
 
 def get_user_repository(session: Session = Depends(get_db)):
     return UserRepository(session)
