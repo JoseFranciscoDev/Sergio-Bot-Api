@@ -47,7 +47,7 @@ exceptions.py   → domain-specific exception classes
 
 **Dependency injection chain:** `get_db()` (yields a Session) → `get_<module>_repository()` → `get_<module>_service()` — all wired through FastAPI's `Depends`.
 
-**Database:** `api/v1/shared/database.py` defines `Base` (the SQLAlchemy `DeclarativeBase` shared by all models), `engine`, `Session`, `init_db()`, and `get_db()`. New models must be imported in `database.py` (via `from api.v1.<Module>.models import *`) so `Base.metadata.create_all` picks them up.
+**Database:** `api/v1/shared/base.py` defines `Base` (the SQLAlchemy `DeclarativeBase` shared by all models). Models must import `Base` from `base.py` — never from `database.py` — to avoid circular imports. `api/v1/shared/database.py` imports `Base` from `base.py`, then imports all models (via `from api.v1.<Module>.models import *`) so `Base.metadata.create_all` picks them up, and defines `engine`, `Session`, `init_db()`, and `get_db()`.
 
 **Settings:** `api/v1/shared/settings.py` uses `pydantic-settings` to load env vars from the `.env` file at the project root. Add new config values to the `Settings` class there.
 
@@ -62,3 +62,7 @@ exceptions.py   → domain-specific exception classes
 ## Environment
 
 `.env` at root (loaded by pydantic-settings):
+
+## Restrictions
+
+Never modify functions/methods that dont have explicity requested to you modify
