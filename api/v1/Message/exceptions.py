@@ -1,0 +1,2 @@
+class MessageNotFoundError(Exception):
+    pass
