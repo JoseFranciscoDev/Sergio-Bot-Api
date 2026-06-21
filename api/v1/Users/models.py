@@ -1,7 +1,7 @@
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.dialects.mysql import TINYINT
-from api.v1.shared.database import Base
+from api.v1.shared.base import Base
 
 
 class User(Base):
